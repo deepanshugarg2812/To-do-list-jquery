@@ -4,8 +4,9 @@ $(document).ready(() =>{
     let inputBox = $("#inpTask")
     let listItems = $("#ulTasks")
     let addBtn = $("#addBtn")
-    let clearBtn = $("#clearBtn")
-
+    let resetBtn = $("#resetBtn")
+    let clearBtn = $("#btnCleanup")
+    let sortItem = $("#btnSort")
 
     //Create the add function
     function addItem(){
@@ -27,11 +28,36 @@ $(document).ready(() =>{
     inputBox.keypress((e)=>{
         if(e.which == 13){
             addItem()
+            toogleInputButton(true)
         }
     })
     addBtn.click(addItem)
 
-    clearBtn.click( ()=> {
+    resetBtn.click( ()=> {
         inputBox.val("")
+        toogleInputButton(inputBox.val() == '')
     })
+
+    clearBtn.click( () =>{
+        $("#ulTasks .done").remove()
+    })
+
+    sortItem.click( () =>{
+        $("#ulTasks .done").appendTo(listItems)
+    })
+
+    function toogleInputButton(booleanVal){
+        if(booleanVal == true){
+            resetBtn.prop('disabled' , true)
+        }
+        else{
+            resetBtn.prop('disabled' , false)
+        }
+    }
+
+    inputBox.on('input',() => {
+        toogleInputButton(inputBox.val() == '')
+    })
+
+
 })
